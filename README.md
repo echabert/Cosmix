@@ -7,5 +7,8 @@ The goal is twofold:
 1 - Dependancies
  - ROOT
 
-
+2 - Running the programs
+ - source setup.sh
+ - make
+ - execute the programs
 
