@@ -3,19 +3,27 @@
 using namespace std;
 
 
+void CosmixSimu::SetMaterialProperties(double Z, double A, double rho, double dEdX){
+  Z_ = Z;
+  A_ = A;
+  rho_ = rho;
+  dEdx_ = dEdX;
+}
 
 double CosmixSimu::GetLandauWidth(double pathlenght, double beta){
+  /*
   //Cesium 55 137
   //Iode 17 131
-  double K = 0.307;
   double Z = (55+17.)/2;
   double A = (137+131.)/2;
   double rho = 4.51; // g.cm-3
-  double x = rho*pathlenght;
+  */
+  double K = 0.307;
+  double x = rho_*pathlenght;
   //double beta = 0.998; //mean beta for muons
   //Forume is extracted from http://pdg.lbl.gov/2010/reviews/rpp2010-rev-passage-particles-matter.pdf,
   //Fluctuations in energy loss - 27.2.7
-  double w = 4*K/2*Z/A*x/(beta*beta);
+  double w = 4*K/2*Z_/A_*x/(beta*beta);
   return w;
 }
 
@@ -23,7 +31,13 @@ CosmixSimu::CosmixSimu(){
   ThickZ_ =  2.;
   ThickY_ =  3.;
   Length_ = 15.;
-  ElossThickZ_ = 14.;
+  //Cesium 55 137
+  //Iode 17 131
+  Z_ = (55+17.)/2;
+  A_ = (137+131.)/2;
+  rho_ = 4.51; // g.cm-3
+  dEdx_ = 7;
+  ElossThickZ_ = dEdx_*ThickZ_;
   tr = new TRandom();
   hRat = 0;
   hAll = 0;

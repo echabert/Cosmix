@@ -57,7 +57,12 @@ class CosmixSimu{
   	double_t ThickZ_; // Thickness of detectors in the pointing direction
  	double_t ThickY_; // Thickness of detectors in the orthogonal direction
   	double_t Length_; // Length of detectors (i.e: in x direction)
-  	double_t ElossThickZ_; // Mean energy loss for MIP traversing the detector with a normal angle [MeV]
+  	//The properties below depends on the material
+	double_t Z_;
+	double_t A_;
+	double_t rho_; //density in g.cm^-3
+	double_t dEdx_; //MeV/cm
+	double_t ElossThickZ_; // Mean energy loss for MIP traversing the detector with a normal angle [MeV]
 	TRandom *tr;
   
         //Histograms
@@ -88,6 +93,10 @@ class CosmixSimu{
  
     double GetSolidAngle( double& err, double& thetaReso, double Distance = 1.2, double Zenith = 0., double NPseudoExp = 1e5, bool verbose = true, bool Draw = false, bool WaitPrimitive=true, bool Write = false, TFile* ofile = 0, bool GenerateTree = false, TString Type = "Cosmic", bool FirstDetectorIsDot = true); // Distance is the distance between detectors in cm
     void SetGeometry(double thickZ, double thickY, double lenght);
+    //Z & A of the material - 
+    //rho [g/cm^3]
+    //dEdX MeV per cm
+    void SetMaterialProperties(double Z, double A, double rho, double dEdX);
     //path lengh in cm
     //beta of the incoming particle
     double GetLandauWidth(double pathlenght = 2, double beta = 0.998);
