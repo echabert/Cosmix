@@ -46,6 +46,7 @@ void DataAnalysis::LoadModels(){
     //functions["Poisson"] = new TF1("Poisson","TMath::Poisson",0,100);
     functions["pol1"] = new TF1("pol1","[0]*x+[1]",0,100);
     functions["Poisson"] = new  TF1("pois","[0]*TMath::Poisson(x,[1])",0,100);
+    //functions["Poisson2"] = new TF1("pois2","[0]*TMath::Power(([1]/[2]),(x/[2]))(TMath::Exp(-([1]/[2])))/TMath::Gamma((x/[2])+1)",0,100);
     functions["Gauss"]= new TF1("Gauss","gaus",0,100);
     functions["cos2"] = new TF1("cos2","[0]*cos(x)*cos(x)+[1]",0,TMath::Pi());
     functions["cosn"] = new TF1("cosn","[0]*TMath::Power(cos(x),[2])+[1]",0,TMath::Pi());
@@ -56,6 +57,14 @@ void DataAnalysis::LoadModels(){
     fCos2Gaus.SetNofPointsFFT(1000);
     functions["cos2Gaus"] = new TF1("cos2Gaus",fCos2Gaus, 0.,TMath::Pi(), fCos2Gaus.GetNpar());
     functions["cos2Gaus"]->SetParameters(600.,500,0,0.5);
+    functions["cos2Gaus"]->FixParameter(2,0);
+    
+    TF1Convolution fPoisGaus("pois","gaus",0,100,true);
+    fCos2Gaus.SetRange(0.,100);
+    fCos2Gaus.SetNofPointsFFT(1000);
+    functions["PoisGaus"] = new TF1("PoisGaus",fPoisGaus, 0.,100, fCos2Gaus.GetNpar());
+    functions["PoisGaus"]->SetParameters(75.,4,0,1);
+    functions["PoisGaus"]->FixParameter(2,0);
 
 }
 
